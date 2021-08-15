@@ -1,0 +1,98 @@
+﻿@page
+@model Pages.Todos.IndexModel
+
+@{
+    ViewData["Title"] = "Todos";
+}
+
+@using Microsoft.AspNetCore.Identity
+@using ChuckWebApp.Areas.Identity.Data
+
+@inject UserManager<ChuckWebAppUser> UserManager
+
+<h2>Todo List</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Todos[0].Activity)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.Todos[0].DueDate)
+                </a>
+            </th>
+            <th style="text-align: center; align-content: center;">
+                @Html.DisplayNameFor(model => model.Todos[0].IsDone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Todos)
+        {
+            @if (item.ChuckWebAppUserId == @UserManager.GetUserId(User))
+            {        
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td style="text-align: center; align-content: center;">
+                @Html.DisplayFor(modelItem => item.IsDone)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.TodoID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.TodoID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.TodoID">Delete</a>
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+    @{
+        var prevDisabled = !Model.Todos.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Todos.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Todos.PageIndex - 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="./Index"
+       asp-route-sortOrder="@Model.CurrentSort"
+       asp-route-pageIndex="@(Model.Todos.PageIndex + 1)"
+       asp-route-currentFilter="@Model.CurrentFilter"
+       class="btn btn-primary @nextDisabled">
+        Next
+    </a>
+

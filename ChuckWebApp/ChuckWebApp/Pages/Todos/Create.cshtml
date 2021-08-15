@@ -1,0 +1,50 @@
+﻿@page
+@model Pages.Todos.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@using Microsoft.AspNetCore.Identity
+@using ChuckWebApp.Areas.Identity.Data
+
+@inject UserManager<ChuckWebAppUser> UserManager
+
+<h1>Create</h1>
+<p>@ViewData["Message"]</p>
+<h4>Todo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Todo.Activity" class="control-label"></label>
+                <input asp-for="Todo.Activity" class="form-control" />
+                <span asp-validation-for="Todo.Activity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Todo.DueDate" class="control-label"></label>
+                <input asp-for="Todo.DueDate" class="form-control" />
+                <span asp-validation-for="Todo.DueDate" class="text-danger"></span>
+            </div>
+           @* <div class="form-group">
+                <label asp-for="Todo.ChuckWebAppUserId" class="control-label"></label>
+                <input asp-for="Todo.ChuckWebAppUserId" class="form-control"> @UserManager.GetUserId(User) </input>
+                <span asp-validation-for="Todo.ChuckWebAppUserId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

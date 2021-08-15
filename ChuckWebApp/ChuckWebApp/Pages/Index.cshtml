@@ -1,0 +1,28 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+    <p>@ViewData["Message"]</p>
+}
+
+@using Microsoft.AspNetCore.Identity
+@using ChuckWebApp.Areas.Identity.Data
+
+@inject UserManager<ChuckWebAppUser> UserManager
+
+    <div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<hi>
+    Hello @UserManager.GetUserName(User)
+</hi>
+
+
+
+
+   
+
+
+

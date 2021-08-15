@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/KeyTest-Vault",
+      "type": "secrets.keyVault",
+      "connectionId": "VaultUri",
+      "secretStore": null
+    },
+    "mssql2": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/calpine-test-server/databases/ChuckWebApp",
+      "type": "mssql.azure",
+      "connectionId": "azureWebApp",
+      "secretStore": "AzureKeyVault"
+    },
+    "secrets2": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/calpine-test-server/databases/ChuckWebApp",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:ChuckWebAppContextConnection",
+      "secretStore": "LocalSecretsFile"
+    }
+  }
+}
